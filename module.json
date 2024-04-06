@@ -1,0 +1,66 @@
+{
+  "name": "rttrPM",
+  "type": "UDP",
+  "path": "Protocol",
+  "version": "1.0.0",
+  "description": "FreeD protocol implementation.",
+  "url": "https://github.com/nicolaserard/rttrPM-Chataigne-Module",
+  "downloadURL": "https://github.com/nicolaserard/rttrPM-Chataigne-Module/archive/refs/heads/main.zip",
+  "hasInput": true,
+  "hasOutput": false,
+  "hideDefaultCommands": false,
+  "hideDefaultParameters": [
+    "autoAdd",
+    "Message Structure",
+    "Output",
+    "First value is the name"
+  ],
+  "defaults":
+  {
+    "autoAdd": false,
+    "Protocol": "Raw",
+    "Input": {
+      "localPort": 24002
+    }
+
+  },
+  "parameters": {
+    "Setup":
+    {
+    }
+  },
+  	"scripts": [
+		"rttrPM.js"
+	],
+
+ "values": {
+     "Index 1": {
+       "type": "Container",
+       "Position": {
+         "type": "Point3D",
+         "min": [
+           -100,
+           -100,
+           -100
+         ],
+         "max": [
+           100,
+           100,
+           100
+         ]
+       },
+       "Velocity": {
+         "type": "Point3D"
+       },
+       "Acceleration": {
+         "type": "Point3D"
+       }
+     }
+ },
+
+
+  "commands": {
+  }
+}
+
+
