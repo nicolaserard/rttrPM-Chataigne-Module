@@ -45,23 +45,13 @@ function init() {
     orientation_r1 = local.values.addFloatParameter("Orientation r1", "Orientation r1", 0.0, -180.0, 180.0);
     orientation_r2 = local.values.addFloatParameter("Orientation r2", "Orientation r2", 0.0, -180.0, 180.0);
     orientation_r3 = local.values.addFloatParameter("Orientation r3", "Orientation r3", 0.0, -180.0, 180.0);
-    orientation_order = local.values.addIntParameter("Orientation order", "Orientation order", 0, 0, 100000.0);
+    orientation_order = local.values.addIntParameter("Orientation order", "Orientation order", 0, 0, 100000);
 
     for (var i = 1; i <= 32; i++)
     {
 
         create_object(i);
     }
-//     cameraId = local.values.addIntParameter("Camera id",   "Pan"  , 0, 0, 255);
-//     pan = local.values.addFloatParameter("Pan",   "Pan"  , 0.0, -180.0, 180.0);
-//     tilt = local.values.addFloatParameter("Tilt", "Tilt" , 0.0, -180.0, 180.0);
-//     roll = local.values.addFloatParameter("Roll", "Roll" , 0.0, -180.0, 180.0);
-//
-//     xPosition = local.values.addFloatParameter("X position", "X Position", 0.0, -131.07, 131.07);
-//     yPosition = local.values.addFloatParameter("Y position", "Y Position", 0.0, -131.07, 131.07);
-//     zPosition = local.values.addFloatParameter("Z position", "Z Position", 0.0, -131.07, 131.07);
-//     zoom = local.values.addIntParameter("Zoom", "Zoom" , 0, 0, 16777215);
-//     cameraFocus = local.values.addIntParameter("Camera Focus", "Camera Focus" , 0, 0, 16777215);
 }
 
 function create_object(index)
@@ -75,6 +65,7 @@ function create_object(index)
     Objects[i].position = obj.addPoint3DParameter("Position", "Position", [0.0, 0.0, 0.0]);
     Objects[i].velocity = obj.addPoint3DParameter("Velocity", "Velocity", [0.0, 0.0, 0.0]);
     Objects[i].acceleration = obj.addPoint3DParameter("Acceleration", "Acceleration", [0.0, 0.0, 0.0]);
+    obj.setCollapsed(true);
 
 }
 
@@ -85,70 +76,56 @@ function dataReceived(data) {
     var b_int_as_big_endian = header_integer_signature == util.hexStringToInt("4154");
     var header_float_signature = (data[2] << 8) | data[3];
     var b_float_as_big_endian = header_float_signature == util.hexStringToInt("4334");
-    script.log("float as big endian: " + b_float_as_big_endian);
 
-    var header_version = (data[4] << 8) | data[5];
-
-    var pID = 0;
+    var header_version = b_int_as_big_endian ? (data[4] << 8) | data[5]                                     : (data[5] << 8) | data[4];
+    var pID = b_int_as_big_endian ? (data[6] << 24) | (data[7] << 16) | (data[8] << 8) | data[9]            : (data[9] << 24) | (data[8] << 16) | (data[7] << 8) | data[6];
     var packet_format = data[10];
-    var packet_size = 0;
-    var context = 0;
+    var packet_size = b_int_as_big_endian ? (data[11] << 8) | data[12]                                      : (data[12] << 8) | data[11];
+    var context = b_int_as_big_endian ? (data[13] << 24) | (data[14] << 16) | (data[15] << 8) | data[16]    :(data[16] << 24) | (data[15] << 16) | (data[14] << 8) | data[13] ;
+
     var number_of_modules = data[17];
-
-    if (b_int_as_big_endian) {
-        // Big Endian
-        pID = (data[6] << 24) | (data[7] << 16) | (data[8] << 8) | data[9];
-        packet_size = (data[11] << 8) | data[12];
-        context = (data[13] << 24) | (data[14] << 16) | (data[15] << 8) | data[16];
-    } else {
-        // Little Endian
-        pID = (data[9] << 24) | (data[8] << 16) | (data[7] << 8) | data[6];
-        packet_size = (data[12] << 8) | data[11];
-        context = (data[16] << 24) | (data[15] << 16) | (data[14] << 8) | data[13];
-    }
-
 
     var offset_i = 18;
     for (var i = 0; i < number_of_modules; i++) {
 
-        var array = data.splice(-1 * data.length + offset_i);
-        offset_i = extract_packet(array, b_int_as_big_endian, b_float_as_big_endian);
+        data = data.splice(offset_i);
+        offset_i = extract_packet(data, b_int_as_big_endian, b_float_as_big_endian);
     }
 }
 
 function extract_packet(data, b_int_as_big_endian, b_float_as_big_endian)
 {
     var packet_type = data[0];
-    // script.log("packet_type: " + packet_type);
-    // Big Endian
     var packet_size = b_int_as_big_endian ? ((data[1] << 8) | data[2]) : (data[1] | (data[2] << 8));
     var name_length = data[3];
+
+    var name  = '';
+    for (var n=0; n < name_length; n++)
+    {
+        name += String.fromCharCode(data[4+n]);
+    }
+    // script.log("packet_type: " + packet_type + ", packet_size: " + packet_size + ", name_lenght: " + name_length + ", name: " + name);
+
     if (packet_type == 1)
     {
-        var number_submodules = data[name_length + 3];
+        var number_submodules = data[name_length + 4];
         var offset_j = name_length + 4;
     }
     else if (packet_type == 81)
     {
-        var time_stamp = b_int_as_big_endian ? (data[name_length + 3] << 24 | data[name_length + 4] << 16 | data[name_length + 5] << 8 | data[name_length + 6]) : (data[name_length + 6] << 24 | data[name_length + 5] << 16 | data[name_length + 4] << 8 | data[name_length + 3]);
-        var number_submodules = data[nameLen + 7];
-        // script.log("pkType = 81, numMods2: " + number_submodules);
+        var time_stamp = b_int_as_big_endian ? (data[name_length + 4] << 24 | data[name_length + 5] << 16 | data[name_length + 6] << 8 | data[name_length + 7]) : (data[name_length + 7] << 24 | data[name_length + 6] << 16 | data[name_length + 5] << 8 | data[name_length + 4]);
+        var number_submodules = data[name_length + 8];
         var offset_j = name_length + 8;
     }
 
    for (var j = 0; j < number_submodules; j++)
     {
-        if (data[offset_j + 1])
-        {
-         script.log("Module type: " + data[offset_j + 1]);
+        // script.log("Module type: " + data[offset_j + 1]);
 
-        }
-        // script.log("on est en a : " + data[offset_j + 1]);
         if (data[offset_j + 1] == 2)
         {
             //centroid mod
             var module_size = b_int_as_big_endian ? ((data[offset_j + 2] << 8) | data[offset_j + 3]) : ((data[offset_j + 3] << 8) | data[offset_j + 2]);
-            script.log("module size: " + module_size);
             var latency = b_int_as_big_endian ? ((data[offset_j + 4] << 8) | data[offset_j + 5]) : ((data[offset_j + 3] << 8) | data[offset_j + 4]);
 
             if (!b_float_as_big_endian)
@@ -156,22 +133,18 @@ function extract_packet(data, b_int_as_big_endian, b_float_as_big_endian)
                 var x = util.getDoubleFromBytes(data[offset_j + 13], data[offset_j + 12], data[offset_j + 11], data[offset_j + 10], data[offset_j + 9], data[offset_j + 8], data[offset_j + 7], data[offset_j + 6]);
                 var z = util.getDoubleFromBytes(data[offset_j + 21], data[offset_j + 20], data[offset_j + 19], data[offset_j + 18], data[offset_j + 17], data[offset_j + 16], data[offset_j + 15], data[offset_j + 14]);
                 var y = util.getDoubleFromBytes(data[offset_j + 29], data[offset_j + 28], data[offset_j + 27], data[offset_j + 26], data[offset_j + 25], data[offset_j + 24], data[offset_j + 23], data[offset_j + 22]);
-                script.log("x: " + x + ', y: ' + y + ', z: ' + z);
             }
             else
             {
                 var x = util.getDoubleFromBytes(data[offset_j + 6], data[offset_j + 7], data[offset_j + 8], data[offset_j + 9], data[offset_j + 10], data[offset_j + 11], data[offset_j + 12], data[offset_j + 13]);
                 var z = util.getDoubleFromBytes(data[offset_j + 14], data[offset_j + 15], data[offset_j + 16], data[offset_j + 17], data[offset_j + 18], data[offset_j + 19], data[offset_j + 20], data[offset_j + 21]);
                 var y = util.getDoubleFromBytes(data[offset_j + 22], data[offset_j + 23], data[offset_j + 23], data[offset_j + 25], data[offset_j + 26], data[offset_j + 27], data[offset_j + 28], data[offset_j + 29]);
-                script.log("x: " + x + ', y: ' + y + ', z: ' + z);
             }
-            script.log("offset: " + offset_j + ", length: " + data.length);
             var index = data[offset_j + 30];
-            script.log("x: " + x + ', y: ' + y + ', z: ' + z + ', index: ' + index);
 
-            if (index > 0 && index < Objects.length)
+            if (parseInt(name) - 1 > 0 && parseInt(name) - 1 < Objects.length)
             {
-                Objects[index].position.set([x, y, z]);
+                Objects[parseInt(name) - 1].position.set([x, y, z]);
             }
 
         }
@@ -179,7 +152,6 @@ function extract_packet(data, b_int_as_big_endian, b_float_as_big_endian)
         {
             //tracked point position: not tested yet
             var module_size = b_int_as_big_endian ? ((data[offset_j + 2] << 8) | data[offset_j + 3]) : ((data[offset_j + 3] << 8) | data[offset_j + 2]);
-            script.log("module size: " + module_size);
             var latency = b_int_as_big_endian ? ((data[offset_j + 4] << 8) | data[offset_j + 5]) : ((data[offset_j + 3] << 8) | data[offset_j + 4]);
 
             if (!b_float_as_big_endian)
@@ -187,14 +159,12 @@ function extract_packet(data, b_int_as_big_endian, b_float_as_big_endian)
                 var x = util.getDoubleFromBytes(data[offset_j + 13], data[offset_j + 12], data[offset_j + 11], data[offset_j + 10], data[offset_j + 9], data[offset_j + 8], data[offset_j + 7], data[offset_j + 6]);
                 var z = util.getDoubleFromBytes(data[offset_j + 21], data[offset_j + 20], data[offset_j + 19], data[offset_j + 18], data[offset_j + 17], data[offset_j + 16], data[offset_j + 15], data[offset_j + 14]);
                 var y = util.getDoubleFromBytes(data[offset_j + 29], data[offset_j + 28], data[offset_j + 27], data[offset_j + 26], data[offset_j + 25], data[offset_j + 24], data[offset_j + 23], data[offset_j + 22]);
-                script.log("x: " + x + ', y: ' + y + ', z: ' + z);
             }
             else
             {
                 var x = util.getDoubleFromBytes(data[offset_j + 6], data[offset_j + 7], data[offset_j + 8], data[offset_j + 9], data[offset_j + 10], data[offset_j + 11], data[offset_j + 12], data[offset_j + 13]);
                 var z = util.getDoubleFromBytes(data[offset_j + 14], data[offset_j + 15], data[offset_j + 16], data[offset_j + 17], data[offset_j + 18], data[offset_j + 19], data[offset_j + 20], data[offset_j + 21]);
                 var y = util.getDoubleFromBytes(data[offset_j + 22], data[offset_j + 23], data[offset_j + 23], data[offset_j + 25], data[offset_j + 26], data[offset_j + 27], data[offset_j + 28], data[offset_j + 29]);
-                script.log("x: " + x + ', y: ' + y + ', z: ' + z);
             }
             var index = data[offset_j + 28];
             if (index > 0 && index < Objects.length)
@@ -216,7 +186,6 @@ function extract_packet(data, b_int_as_big_endian, b_float_as_big_endian)
                 var qy = util.getDoubleFromBytes(data[offset_j + 29], data[offset_j + 28], data[offset_j + 27], data[offset_j + 26], data[offset_j + 25], data[offset_j + 24], data[offset_j + 23], data[offset_j + 22]);
                 var qw = util.getDoubleFromBytes(data[offset_j + 37], data[offset_j + 36], data[offset_j + 35], data[offset_j + 34], data[offset_j + 33], data[offset_j + 32], data[offset_j + 31], data[offset_j + 30]);
 
-                script.log("qx: " + qx + ', qy: ' + qy + ', qz: ' + qz + ', qw: ' + qw);
             }
             else
             {
@@ -224,7 +193,6 @@ function extract_packet(data, b_int_as_big_endian, b_float_as_big_endian)
                 var qz = util.getDoubleFromBytes(data[offset_j + 14], data[offset_j + 15], data[offset_j + 16], data[offset_j + 17], data[offset_j + 18], data[offset_j + 19], data[offset_j + 20], data[offset_j + 21]);
                 var qy = util.getDoubleFromBytes(data[offset_j + 22], data[offset_j + 23], data[offset_j + 23], data[offset_j + 25], data[offset_j + 26], data[offset_j + 27], data[offset_j + 28], data[offset_j + 29]);
                 var qw = util.getDoubleFromBytes(data[offset_j + 30], data[offset_j + 31], data[offset_j + 32], data[offset_j + 33], data[offset_j + 34], data[offset_j + 35], data[offset_j + 36], data[offset_j + 37]);
-                script.log("qx: " + qx + ', qy: ' + qy + ', qz: ' + qz + ', qw: ' + qw);
             }
 
             OrientationX.set(qx);
@@ -237,8 +205,8 @@ function extract_packet(data, b_int_as_big_endian, b_float_as_big_endian)
         {
             // orientation (euler)
             var module_size = b_int_as_big_endian ? ((data[offset_j + 2] << 8) | data[offset_j + 3]) : ((data[offset_j + 3] << 8) | data[offset_j + 2]);
-            var latency = b_int_as_big_endian ? ((data[offset_j + 4] << 8) | data[offset_j + 5]) : ((data[offset_j + 3] << 8) | data[offset_j + 4]);
-            var order = b_int_as_big_endian ? ((data[offset_j + 6] << 8) | data[offset_j + 7]) : ((data[offset_j + 7] << 8) | data[offset_j + 5]);
+            var latency = b_int_as_big_endian ? ((data[offset_j + 4] << 8) | data[offset_j + 5]) : ((data[offset_j + 3] << 5) | data[offset_j + 4]);
+            var order = b_int_as_big_endian ? ((data[offset_j + 6] << 8) | data[offset_j + 7]) : ((data[offset_j + 7] << 8) | data[offset_j + 6]);
 
             if (!b_float_as_big_endian)
             {
@@ -252,19 +220,17 @@ function extract_packet(data, b_int_as_big_endian, b_float_as_big_endian)
                 var r2 = util.getDoubleFromBytes(data[offset_j + 16], data[offset_j + 17], data[offset_j + 18], data[offset_j + 19], data[offset_j + 20], data[offset_j + 21], data[offset_j + 22], data[offset_j + 23]);
                 var r3 = util.getDoubleFromBytes(data[offset_j + 24], data[offset_j + 25], data[offset_j + 26], data[offset_j + 27], data[offset_j + 28], data[offset_j + 29], data[offset_j + 30], data[offset_j + 31]);
             }
-            script.log("r1: " + r1 + ', r2: ' + r2 + ', r3: ' + r3 + ', order: ' + order);
 
             orientation_r1.set(r1);
             orientation_r2.set(r2);
             orientation_r3.set(r3);
-            orientation_order.set(parseInt(order));
+            orientation_order.set(order);
         }
 
         if (data[offset_j + 1] == 31)
         {
             // centroid acceleratation and velocity: not implement yet
-            var module_size = b_int_as_big_endian ? (data[offset_j + 2] << 8) | data[offset_j + 3] : data[offset_j + 2] | (data[offset_j + 3] << 8);
-            script.log("module size: " + module_size);
+            var module_size = b_int_as_big_endian ? ((data[offset_j + 2] << 8) | data[offset_j + 3]) : ((data[offset_j + 3] << 8) | data[offset_j + 2]);
 
             if (!b_float_as_big_endian)
             {
@@ -290,15 +256,13 @@ function extract_packet(data, b_int_as_big_endian, b_float_as_big_endian)
                 var velocity_y = util.getFloatFromBytes(data[offset_j + 47], data[offset_j + 46], data[offset_j + 45], data[offset_j + 44]);
                 var velocity_z = util.getFloatFromBytes(data[offset_j + 51], data[offset_j + 50], data[offset_j + 49], data[offset_j + 48]);
             }
-            script.log("x: " + x + ', y: ' + y + ', z: ' + z);
 
         }
 
         if (data[offset_j + 1] == 32)
         {
-            // script.log("tracked point acceleratation and velocity");
             // tracked point acceleratation and velocity : working
-            var module_size = b_int_as_big_endian ? ((data[offset_j + 2] << 8) | data[offset_j + 3]) : (data[offset_j + 2] | (data[offset_j + 3] << 8));
+            var module_size = b_int_as_big_endian ? ((data[offset_j + 2] << 8) | data[offset_j + 3]) : ((data[offset_j + 3] << 8) | data[offset_j + 2]);
 
             if (b_float_as_big_endian)
             {
@@ -326,13 +290,12 @@ function extract_packet(data, b_int_as_big_endian, b_float_as_big_endian)
             }
 
             var index = data[offset_j + 52];
-            script.log("x: " + x + ', y: ' + y + ', z: ' + z + ', index: ' + index);
 
-            if (index > 0 && index < Objects.length)
+            if (parseInt(name) - 1 > 0 && parseInt(name ) - 1 < Objects.length)
             {
-                Objects[index].position.set([x, y, z]);
-                Objects[index].acceleration.set([acc_x, acc_y, acc_z]);
-                Objects[index].velocity.set([velocity_x, velocity_y, velocity_z]);
+                Objects[parseInt(name) - 1].position.set([x, y, z]);
+                Objects[parseInt(name) - 1].acceleration.set([acc_x, acc_y, acc_z]);
+                Objects[parseInt(name) - 1].velocity.set([velocity_x, velocity_y, velocity_z]);
             }
         }
 

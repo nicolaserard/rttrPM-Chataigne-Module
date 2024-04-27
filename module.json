@@ -34,7 +34,7 @@
 	],
 
  "values": {
-     "Index 1": {
+     "Object 1": {
        "type": "Container",
        "Position": {
          "type": "Point3D",
@@ -55,7 +55,689 @@
        "Acceleration": {
          "type": "Point3D"
        }
-     }
+     },
+     "Object 2": {
+       "type": "Container",
+       "Position": {
+         "type": "Point3D",
+         "min": [
+           -100,
+           -100,
+           -100
+         ],
+         "max": [
+           100,
+           100,
+           100
+         ]
+       },
+       "Velocity": {
+         "type": "Point3D"
+       },
+       "Acceleration": {
+         "type": "Point3D"
+       }
+     },
+     "Object 3": {
+       "type": "Container",
+       "Position": {
+         "type": "Point3D",
+         "min": [
+           -100,
+           -100,
+           -100
+         ],
+         "max": [
+           100,
+           100,
+           100
+         ]
+       },
+       "Velocity": {
+         "type": "Point3D"
+       },
+       "Acceleration": {
+         "type": "Point3D"
+       }
+     },
+     "Object 4": {
+       "type": "Container",
+       "Position": {
+         "type": "Point3D",
+         "min": [
+           -100,
+           -100,
+           -100
+         ],
+         "max": [
+           100,
+           100,
+           100
+         ]
+       },
+       "Velocity": {
+         "type": "Point3D"
+       },
+       "Acceleration": {
+         "type": "Point3D"
+       }
+     },
+     "Object 5": {
+       "type": "Container",
+       "Position": {
+         "type": "Point3D",
+         "min": [
+           -100,
+           -100,
+           -100
+         ],
+         "max": [
+           100,
+           100,
+           100
+         ]
+       },
+       "Velocity": {
+         "type": "Point3D"
+       },
+       "Acceleration": {
+         "type": "Point3D"
+       }
+     },
+     "Object 6": {
+       "type": "Container",
+       "Position": {
+         "type": "Point3D",
+         "min": [
+           -100,
+           -100,
+           -100
+         ],
+         "max": [
+           100,
+           100,
+           100
+         ]
+       },
+       "Velocity": {
+         "type": "Point3D"
+       },
+       "Acceleration": {
+         "type": "Point3D"
+       }
+     },
+     "Object 7": {
+       "type": "Container",
+       "Position": {
+         "type": "Point3D",
+         "min": [
+           -100,
+           -100,
+           -100
+         ],
+         "max": [
+           100,
+           100,
+           100
+         ]
+       },
+       "Velocity": {
+         "type": "Point3D"
+       },
+       "Acceleration": {
+         "type": "Point3D"
+       }
+     },
+     "Object 8": {
+       "type": "Container",
+       "Position": {
+         "type": "Point3D",
+         "min": [
+           -100,
+           -100,
+           -100
+         ],
+         "max": [
+           100,
+           100,
+           100
+         ]
+       },
+       "Velocity": {
+         "type": "Point3D"
+       },
+       "Acceleration": {
+         "type": "Point3D"
+       }
+     },
+     "Object 9": {
+       "type": "Container",
+       "Position": {
+         "type": "Point3D",
+         "min": [
+           -100,
+           -100,
+           -100
+         ],
+         "max": [
+           100,
+           100,
+           100
+         ]
+       },
+       "Velocity": {
+         "type": "Point3D"
+       },
+       "Acceleration": {
+         "type": "Point3D"
+       }
+     },
+     "Object 10": {
+       "type": "Container",
+       "Position": {
+         "type": "Point3D",
+         "min": [
+           -100,
+           -100,
+           -100
+         ],
+         "max": [
+           100,
+           100,
+           100
+         ]
+       },
+       "Velocity": {
+         "type": "Point3D"
+       },
+       "Acceleration": {
+         "type": "Point3D"
+       }
+     },
+     "Object 11": {
+       "type": "Container",
+       "Position": {
+         "type": "Point3D",
+         "min": [
+           -100,
+           -100,
+           -100
+         ],
+         "max": [
+           100,
+           100,
+           100
+         ]
+       },
+       "Velocity": {
+         "type": "Point3D"
+       },
+       "Acceleration": {
+         "type": "Point3D"
+       }
+     },
+     "Object 12": {
+       "type": "Container",
+       "Position": {
+         "type": "Point3D",
+         "min": [
+           -100,
+           -100,
+           -100
+         ],
+         "max": [
+           100,
+           100,
+           100
+         ]
+       },
+       "Velocity": {
+         "type": "Point3D"
+       },
+       "Acceleration": {
+         "type": "Point3D"
+       }
+     },
+     "Object 13": {
+       "type": "Container",
+       "Position": {
+         "type": "Point3D",
+         "min": [
+           -100,
+           -100,
+           -100
+         ],
+         "max": [
+           100,
+           100,
+           100
+         ]
+       },
+       "Velocity": {
+         "type": "Point3D"
+       },
+       "Acceleration": {
+         "type": "Point3D"
+       }
+     },
+     "Object 14": {
+       "type": "Container",
+       "Position": {
+         "type": "Point3D",
+         "min": [
+           -100,
+           -100,
+           -100
+         ],
+         "max": [
+           100,
+           100,
+           100
+         ]
+       },
+       "Velocity": {
+         "type": "Point3D"
+       },
+       "Acceleration": {
+         "type": "Point3D"
+       }
+     },
+     "Object 15": {
+       "type": "Container",
+       "Position": {
+         "type": "Point3D",
+         "min": [
+           -100,
+           -100,
+           -100
+         ],
+         "max": [
+           100,
+           100,
+           100
+         ]
+       },
+       "Velocity": {
+         "type": "Point3D"
+       },
+       "Acceleration": {
+         "type": "Point3D"
+       }
+     },
+     "Object 16": {
+       "type": "Container",
+       "Position": {
+         "type": "Point3D",
+         "min": [
+           -100,
+           -100,
+           -100
+         ],
+         "max": [
+           100,
+           100,
+           100
+         ]
+       },
+       "Velocity": {
+         "type": "Point3D"
+       },
+       "Acceleration": {
+         "type": "Point3D"
+       }
+     },
+     "Object 17": {
+       "type": "Container",
+       "Position": {
+         "type": "Point3D",
+         "min": [
+           -100,
+           -100,
+           -100
+         ],
+         "max": [
+           100,
+           100,
+           100
+         ]
+       },
+       "Velocity": {
+         "type": "Point3D"
+       },
+       "Acceleration": {
+         "type": "Point3D"
+       }
+     },
+     "Object 18": {
+       "type": "Container",
+       "Position": {
+         "type": "Point3D",
+         "min": [
+           -100,
+           -100,
+           -100
+         ],
+         "max": [
+           100,
+           100,
+           100
+         ]
+       },
+       "Velocity": {
+         "type": "Point3D"
+       },
+       "Acceleration": {
+         "type": "Point3D"
+       }
+     },
+     "Object 19": {
+       "type": "Container",
+       "Position": {
+         "type": "Point3D",
+         "min": [
+           -100,
+           -100,
+           -100
+         ],
+         "max": [
+           100,
+           100,
+           100
+         ]
+       },
+       "Velocity": {
+         "type": "Point3D"
+       },
+       "Acceleration": {
+         "type": "Point3D"
+       }
+     },
+     "Object 20": {
+       "type": "Container",
+       "Position": {
+         "type": "Point3D",
+         "min": [
+           -100,
+           -100,
+           -100
+         ],
+         "max": [
+           100,
+           100,
+           100
+         ]
+       },
+       "Velocity": {
+         "type": "Point3D"
+       },
+       "Acceleration": {
+         "type": "Point3D"
+       }
+     },
+     "Object 21": {
+       "type": "Container",
+       "Position": {
+         "type": "Point3D",
+         "min": [
+           -100,
+           -100,
+           -100
+         ],
+         "max": [
+           100,
+           100,
+           100
+         ]
+       },
+       "Velocity": {
+         "type": "Point3D"
+       },
+       "Acceleration": {
+         "type": "Point3D"
+       }
+     },
+     "Object 22": {
+       "type": "Container",
+       "Position": {
+         "type": "Point3D",
+         "min": [
+           -100,
+           -100,
+           -100
+         ],
+         "max": [
+           100,
+           100,
+           100
+         ]
+       },
+       "Velocity": {
+         "type": "Point3D"
+       },
+       "Acceleration": {
+         "type": "Point3D"
+       }
+     },
+     "Object 23": {
+       "type": "Container",
+       "Position": {
+         "type": "Point3D",
+         "min": [
+           -100,
+           -100,
+           -100
+         ],
+         "max": [
+           100,
+           100,
+           100
+         ]
+       },
+       "Velocity": {
+         "type": "Point3D"
+       },
+       "Acceleration": {
+         "type": "Point3D"
+       }
+     },
+     "Object 24": {
+       "type": "Container",
+       "Position": {
+         "type": "Point3D",
+         "min": [
+           -100,
+           -100,
+           -100
+         ],
+         "max": [
+           100,
+           100,
+           100
+         ]
+       },
+       "Velocity": {
+         "type": "Point3D"
+       },
+       "Acceleration": {
+         "type": "Point3D"
+       }
+     },
+     "Object 25": {
+       "type": "Container",
+       "Position": {
+         "type": "Point3D",
+         "min": [
+           -100,
+           -100,
+           -100
+         ],
+         "max": [
+           100,
+           100,
+           100
+         ]
+       },
+       "Velocity": {
+         "type": "Point3D"
+       },
+       "Acceleration": {
+         "type": "Point3D"
+       }
+     },
+     "Object 26": {
+       "type": "Container",
+       "Position": {
+         "type": "Point3D",
+         "min": [
+           -100,
+           -100,
+           -100
+         ],
+         "max": [
+           100,
+           100,
+           100
+         ]
+       },
+       "Velocity": {
+         "type": "Point3D"
+       },
+       "Acceleration": {
+         "type": "Point3D"
+       }
+     },
+     "Object 27": {
+       "type": "Container",
+       "Position": {
+         "type": "Point3D",
+         "min": [
+           -100,
+           -100,
+           -100
+         ],
+         "max": [
+           100,
+           100,
+           100
+         ]
+       },
+       "Velocity": {
+         "type": "Point3D"
+       },
+       "Acceleration": {
+         "type": "Point3D"
+       }
+     },
+     "Object 28": {
+       "type": "Container",
+       "Position": {
+         "type": "Point3D",
+         "min": [
+           -100,
+           -100,
+           -100
+         ],
+         "max": [
+           100,
+           100,
+           100
+         ]
+       },
+       "Velocity": {
+         "type": "Point3D"
+       },
+       "Acceleration": {
+         "type": "Point3D"
+       }
+     },
+     "Object 29": {
+       "type": "Container",
+       "Position": {
+         "type": "Point3D",
+         "min": [
+           -100,
+           -100,
+           -100
+         ],
+         "max": [
+           100,
+           100,
+           100
+         ]
+       },
+       "Velocity": {
+         "type": "Point3D"
+       },
+       "Acceleration": {
+         "type": "Point3D"
+       }
+     },
+     "Object 30": {
+       "type": "Container",
+       "Position": {
+         "type": "Point3D",
+         "min": [
+           -100,
+           -100,
+           -100
+         ],
+         "max": [
+           100,
+           100,
+           100
+         ]
+       },
+       "Velocity": {
+         "type": "Point3D"
+       },
+       "Acceleration": {
+         "type": "Point3D"
+       }
+     },
+     "Object 31": {
+       "type": "Container",
+       "Position": {
+         "type": "Point3D",
+         "min": [
+           -100,
+           -100,
+           -100
+         ],
+         "max": [
+           100,
+           100,
+           100
+         ]
+       },
+       "Velocity": {
+         "type": "Point3D"
+       },
+       "Acceleration": {
+         "type": "Point3D"
+       }
+     },
+     "Object 32": {
+       "type": "Container",
+       "Position": {
+         "type": "Point3D",
+         "min": [
+           -100,
+           -100,
+           -100
+         ],
+         "max": [
+           100,
+           100,
+           100
+         ]
+       },
+       "Velocity": {
+         "type": "Point3D"
+       },
+       "Acceleration": {
+         "type": "Point3D"
+       }
+     },
  },
 
 
